@@ -1,9 +1,5 @@
-﻿using Emgu.CV;
+﻿using OpenCvSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp.Services
 {
@@ -11,8 +7,10 @@ namespace ConsoleApp.Services
     {
         public static void SaveFrames(VideoCapture capture, string rutaSalida)
         {
+            //Creamos el frame
             Mat frame = new Mat();
 
+            //iniciamos el contador para identificar cada frame
             int frameNumber = 0;
 
             while (capture.Read(frame))
@@ -27,14 +25,12 @@ namespace ConsoleApp.Services
 
         public static void SaveFrame(Mat frame, string fileName)
         {
-            int frameNumber = 10;
 
-            // Crear un Image para almacenar el frame actual
-            //Image image = new Image(frame);
-            CvInvoke.Imwrite(fileName, frame);
+            // Guardar el frame actual como una imagen
+            Cv2.ImWrite(fileName, frame);
 
             // Mostrar el frame actual
-            Console.WriteLine("Frame {0} guardado", frameNumber);
+            Console.WriteLine("Frame guardado");
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Emgu.CV;
-//using static System.Net.Mime.MediaTypeNames;
+﻿using OpenCvSharp;
 using ConsoleApp.Services;
 
 namespace ConsoleApp
@@ -10,23 +9,25 @@ namespace ConsoleApp
         {
             // Solicitar la ruta del video de entrada
             Console.WriteLine("Introduce la ruta del video de entrada:");
-            string rutaEntrada = Console.ReadLine();
+            string inputRoute = Console.ReadLine();
 
             // Solicitar la ruta del video de salida
             Console.WriteLine("Introduce la ruta del video de salida:");
-            string rutaSalida = Console.ReadLine();
+            string outputRoute = Console.ReadLine();
 
             //generar el video
-            VideoCapture capture = new VideoCapture(rutaEntrada);
+            var capture = new VideoCapture(inputRoute);
+            //VideoCapture capture = new VideoCapture(inputRoute);
 
-            //private readonly framesSplit = new FrameSplitService();
 
             //ejecutamos la función encargada
-            FrameSplitService.SaveFrames(capture, rutaSalida);
-            
+
+
+            FaceRecognitionService.FaceDifferences(capture, outputRoute);
+
 
             // Mostrar un mensaje de éxito
-            Console.WriteLine("La ruta de entrada: "+rutaEntrada+" | La ruta salida: "+ rutaSalida);
+            Console.WriteLine("La ruta de entrada: "+inputRoute+" | La ruta salida: "+ outputRoute);
         }
     }
 }
