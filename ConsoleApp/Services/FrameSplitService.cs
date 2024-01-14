@@ -1,36 +1,59 @@
 ﻿using OpenCvSharp;
-using System;
 
 namespace ConsoleApp.Services
 {
     public class FrameSplitService
     {
-        public static void SaveFrames(VideoCapture capture, string rutaSalida)
+        public static void SaveFrames(VideoCapture capture, string outputRoute)
         {
-            //Creamos el frame
-            Mat frame = new Mat();
-
-            //iniciamos el contador para identificar cada frame
-            int frameNumber = 0;
-
-            while (capture.Read(frame))
+            try
             {
-                SaveFrame(frame, System.IO.Path.Combine(rutaSalida, $"frame{frameNumber}.png"));
-                frameNumber++;
-            }
+                // Verificar si el VideoCapture está abierto
+                if (!capture.IsOpened())
+                {
+                    Console.WriteLine("Error: No se pudo abrir el video.");
+                    return;
+                }
 
-            // Cerrar el VideoCapture
-            capture.Dispose();
+                // Crear el directorio de salida si no existe
+                if (!System.IO.Directory.Exists(outputRoute))
+                {
+                    Console.WriteLine($"Error: La ruta de salida '{outputRoute}' no existe.");
+                    return;
+                }
+
+                // Creamos el frame
+                Mat frame = new Mat();
+
+                // Iniciamos el contador para identificar cada frame
+                int frameNumber = 0;
+
+                while (capture.Read(frame))
+                {
+                    SaveFrame(frame, System.IO.Path.Combine(outputRoute, $"frame{frameNumber}.png"));
+                    frameNumber++;
+                }
+
+                // Cerrar el VideoCapture
+                capture.Release();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
         }
 
         public static void SaveFrame(Mat frame, string fileName)
         {
-
-            // Guardar el frame actual como una imagen
-            Cv2.ImWrite(fileName, frame);
-
-            // Mostrar el frame actual
-            Console.WriteLine("Frame guardado");
+            try
+            {
+                // Guardar el frame actual como una imagen
+                Cv2.ImWrite(fileName, frame);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e.Message}");
+            }
         }
     }
 }
