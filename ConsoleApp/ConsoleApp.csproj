@@ -18,9 +18,6 @@
     <None Update="Services\haarcascade_frontalface_alt_tree.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Services\shape_predictor_68_face_landmarks.dat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
