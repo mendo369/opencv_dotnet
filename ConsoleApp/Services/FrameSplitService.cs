@@ -1,4 +1,5 @@
 ﻿using OpenCvSharp;
+using ConsoleApp.Utilities;
 
 namespace ConsoleApp.Services
 {
@@ -30,25 +31,12 @@ namespace ConsoleApp.Services
 
                 while (capture.Read(frame))
                 {
-                    SaveFrame(frame, System.IO.Path.Combine(outputRoute, $"frame{frameNumber}.png"));
+                    UtilitiesOpenCV.SaveFrame(frame, outputRoute, $"{frameNumber}");
                     frameNumber++;
                 }
 
                 // Cerrar el VideoCapture
                 capture.Release();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error: {e.Message}");
-            }
-        }
-
-        public static void SaveFrame(Mat frame, string fileName)
-        {
-            try
-            {
-                // Guardar el frame actual como una imagen
-                Cv2.ImWrite(fileName, frame);
             }
             catch (Exception e)
             {
